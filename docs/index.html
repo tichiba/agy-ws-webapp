@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Antigravity ハンズオン - 実践 AI Coding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --surface: #ffffff;
+      --background: #f8f9fa;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --border: #dadce0;
+      --code-bg: #1e1e1e;
+      --code-fg: #d4d4d4;
+      --success: #1e8e3e;
+      --warning: #f9ab00;
+      --danger: #d93025;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Google Sans', 'Noto Sans JP', sans-serif;
+      background-color: var(--background);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    header {
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+    .brand svg { width: 28px; height: 28px; fill: var(--primary); }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 12px;
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+    .container {
+      display: flex;
+      max-width: 1300px;
+      margin: 0 auto;
+      min-height: calc(100vh - 65px);
+    }
+    /* Sidebar */
+    aside {
+      width: 320px;
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      position: sticky;
+      top: 65px;
+      height: calc(100vh - 65px);
+      overflow-y: auto;
+    }
+    .toc-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+      font-weight: 700;
+    }
+    .toc-list { list-style: none; }
+    .toc-item {
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+    .toc-item:hover {
+      background-color: var(--background);
+      color: var(--text-main);
+    }
+    .toc-item.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .toc-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .toc-item.active .toc-num {
+      background-color: var(--primary);
+      color: #fff;
+    }
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 2.5rem 3.5rem;
+      max-width: 900px;
+    }
+    .step-section { display: none; }
+    .step-section.active { display: block; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    p, li {
+      font-size: 1rem;
+      color: #3c4043;
+      margin-bottom: 1rem;
+    }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+    /* Alert cards */
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      border-left: 4px solid;
+      background-color: var(--surface);
+    }
+    .alert-info {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+      color: #174ea6;
+    }
+    .alert-tip {
+      border-color: var(--success);
+      background-color: #e6f4ea;
+      color: #137333;
+    }
+    .alert-warn {
+      border-color: var(--warning);
+      background-color: #fef7e0;
+      color: #b06000;
+    }
+    /* Code and Prompt box */
+    .prompt-box {
+      background-color: #202124;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      position: relative;
+      border: 1px solid #3c4043;
+    }
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      color: #9aa0a6;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .prompt-content {
+      font-family: 'Roboto Mono', monospace;
+      color: #8ab4f8;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
+    }
+    .btn-copy {
+      background-color: #3c4043;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background-color: #5f6368; }
+    .btn-copy.copied {
+      background-color: var(--success);
+    }
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .btn {
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary {
+      background-color: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover { background-color: #f1f3f4; }
+    .btn-primary {
+      background-color: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background-color: var(--primary-dark); }
+    code {
+      font-family: 'Roboto Mono', monospace;
+      background-color: #e8eaed;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #d93025;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Google Antigravity ハンズオン
+    </div>
+    <div>
+      <span class="badge">所要時間: 30分</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside>
+      <div class="toc-title">ハンズオン手順</div>
+      <ul class="toc-list" id="toc">
+        <li class="toc-item active" onclick="goToStep(0)"><span class="toc-num">0</span>概要と事前準備</li>
+        <li class="toc-item" onclick="goToStep(1)"><span class="toc-num">1</span>Step 1: コード把握</li>
+        <li class="toc-item" onclick="goToStep(2)"><span class="toc-num">2</span>Step 2: 計画と実装 (/plan)</li>
+        <li class="toc-item" onclick="goToStep(3)"><span class="toc-num">3</span>Step 3: 仕様対話 (/grill-me)</li>
+        <li class="toc-item" onclick="goToStep(4)"><span class="toc-num">4</span>Step 4: 自律修復・検証</li>
+        <li class="toc-item" onclick="goToStep(5)"><span class="toc-num">5</span>Step 5: 開発規約 (AGENTS.md)</li>
+        <li class="toc-item" onclick="goToStep(6)"><span class="toc-num">6</span>[発展] Cloud Run デプロイ</li>
+      </ul>
+    </aside>
+
+    <main>
+      <!-- STEP 0 -->
+      <section class="step-section active" id="step-0">
+        <h1>Google Antigravity ハンズオンへようこそ！</h1>
+        <p>本ハンズオンでは、Google の次世代 AI エージェント開発プラットフォーム <strong>Google Antigravity</strong> を使って、Web アプリケーションの開発フローを実践的に体験します。</p>
+        
+        <div class="alert alert-info">
+          <strong>🎯 このハンズオンで体験すること:</strong>
+          <ul>
+            <li><strong>コンテキスト理解</strong>: リポジトリ全体を読み解かせるチャット操作</li>
+            <li><strong>/plan コマンド</strong>: 実装前の「計画（Plan）」立案とレビュー</li>
+            <li><strong>/grill-me コマンド</strong>: エージェントからの逆質問で仕様を詰める対話体験</li>
+            <li><strong>自律的な検証・修復</strong>: ターミナルコマンドを実行させエラーを自己修復させるフロー</li>
+            <li><strong>AGENTS.md</strong>: プロジェクト固有のルールを定義してエージェントを制御</li>
+          </ul>
+        </div>
+
+        <h2>事前準備</h2>
+        <ol>
+          <li>Antigravity を起動し、Google Cloud Project に接続されていることを確認します。</li>
+          <li>ターミナルで本ハンズオン用のベースリポジトリを clone またはダウンロードします：
+            <div class="prompt-box">
+              <div class="prompt-header">
+                <span>Terminal</span>
+                <button class="btn-copy" onclick="copyText(this)">Copy</button>
+              </div>
+              <div class="prompt-content">git clone https://github.com/tichiba/agy-ws-webapp.git
+cd agy-ws-webapp
+npm install</div>
+            </div>
+          </li>
+          <li>Antigravity の <code>File -> Open Folder</code> から <code>agy-ws-webapp</code> フォルダを開きます。</li>
+        </ol>
+      </section>
+
+      <!-- STEP 1 -->
+      <section class="step-section" id="step-1">
+        <h1>Step 1: プロジェクトの把握（所要時間: 5分）</h1>
+        <p>まずはベースアプリを起動し、Antigravity のエージェントにリポジトリ全体の構造を解説させましょう。</p>
+
+        <h2>1. 開発サーバーの起動</h2>
+        <p>Antigravity の下部ターミナル（またはメニューの <code>Terminal -> New Terminal</code>）で開発サーバーを起動します。</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Terminal</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">npm run dev</div>
+        </div>
+        <p>ブラウザで <code>http://localhost:3000</code> を開き、初期画面が表示されることを確認します。</p>
+
+        <h2>2. エージェントにコード構成を解説させる</h2>
+        <p>右側の Antigravity チャットパネルに以下のプロンプトを入力して送信します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">このアプリの全体構成、主要コンポーネントの役割、ルーティングの仕組みをわかりやすく箇条書きで教えて</div>
+        </div>
+
+        <div class="alert alert-tip">
+          💡 <strong>ポイント:</strong> Antigravity は個別のファイルを指定しなくても、プロジェクト全体を自動インデックスして構造を正確に把握します。
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step-section" id="step-2">
+        <h1>Step 2: /plan による計画と実装（所要時間: 7分）</h1>
+        <p>AI コーディングで重要なのは、いきなりコードを書かせるのではなく<strong>「まず計画を立てさせ、それを人間が確認して承認する」</strong>ことです。</p>
+
+        <h2>1. 計画の立案 (/plan)</h2>
+        <p>チャットパネルに <code>/plan</code> スラッシュコマンドを使ってタスク管理機能の計画を指示します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">/plan このアプリにシンプルなタスク管理機能を追加したいです。
+- タスクの追加（タイトル入力）
+- タスクの一覧表示
+- タスクの削除
+- ステータス（未着手 / 進行中 / 完了）の保持
+まずはデータ構造とコンポーネント構成の計画を立ててください。</div>
+        </div>
+
+        <h2>2. 計画の承認と実装指示</h2>
+        <p>エージェントが提示した計画書を確認し、問題なければ実装指示を出します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">この計画で実装を進めてください。必要なファイルの作成と page.tsx の更新をお願いします。</div>
+        </div>
+
+        <div class="alert alert-tip">
+          💡 <strong>ポイント:</strong> エージェントが生成した複数ファイルの変更差分（Diff）をエディタ上で確認し、<code>Accept</code> を押して適用しましょう。
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step-section" id="step-3">
+        <h1>Step 3: /grill-me による仕様対話とモダンUI化（所要時間: 8分）</h1>
+        <p>要件が曖昧なとき、エージェント側から質問を投げさせて仕様を具体化する <code>/grill-me</code> コマンドを体験します。</p>
+
+        <h2>1. 仕様対話の開始 (/grill-me)</h2>
+        <p>チャットパネルに以下を入力します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">/grill-me タスク一覧画面に「ステータス別の絞り込みフィルター（タブ）」と「ワンクリックでステータスを変更できるボタン」を追加したいです。
+UXやデザイン、機能要件について考慮すべき点を私に質問して仕様を詰めてください。</div>
+        </div>
+
+        <h2>2. 質問への回答とデザインの指示</h2>
+        <p>エージェントからいくつか質問が返ってきます。簡単な回答とともに、Tailwind CSS でのモダンなデザイン適用を指示します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">上記の回答内容で実装してください。あわせて、Tailwind CSS を活用してモダンなカードスタイル（洗練されたシャドウ、ダークモード調の配色、ステータス別カラーバッジ、レスポンシブ対応）に整えてください。</div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step-section" id="step-4">
+        <h1>Step 4: 自律的な検証とエラー修復（所要時間: 5分）</h1>
+        <p>エージェント自身に型チェックやビルドコマンドを実行させ、エラーがあれば自動で自己修復させる自律性を体験します。</p>
+
+        <h2>1. 自動ビルドチェックと修復指示</h2>
+        <p>チャットパネルに以下を入力します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">TypeScript の型エラー、未定義プロパティ、Lint エラーがないかチェックして、問題があれば自動で修正してください。
+また、ターミナルで `npm run build` を実行してビルドが正常に通ることを確認してください。</div>
+        </div>
+
+        <h2>2. ブラウザで動作確認</h2>
+        <p><code>http://localhost:3000</code> を開き、以下を確認します：</p>
+        <ul>
+          <li>新規タスクを追加できるか</li>
+          <li>ステータス（未着手・進行中・完了）を変更できるか</li>
+          <li>フィルタータブで正しく絞り込みができるか</li>
+        </ul>
+
+        <div class="alert alert-tip">
+          💡 <strong>ポイント:</strong> もし画面で動かない部分やエラーがあれば、「〇〇が動かないので直して」とチャットにそのまま投げてみましょう！
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step-section" id="step-5">
+        <h1>Step 5: AGENTS.md による開発ルールの定義（所要時間: 5分）</h1>
+        <p>チーム開発や継続的な開発において、エージェントにプロジェクト固有の規約を教え込む <code>AGENTS.md</code> を作成します。</p>
+
+        <h2>1. 開発ルールの作成指示</h2>
+        <p>チャットパネルに以下を入力します。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">このプロジェクトの開発規約として、ルートに AGENTS.md を作成してください。
+- コンポーネントは TypeScript で型安全に記述すること
+- コメントやドキュメントは日本語で記述すること
+- アクセシビリティ（ARIA属性やキーボード操作）を考慮すること
+- UIコンポーネントは Tailwind CSS を使用し一貫したカラーパレットを保つこと</div>
+        </div>
+
+        <h2>2. ルールの効果を確認する</h2>
+        <p>作成された <code>AGENTS.md</code> を確認した上で、簡単な追加機能を指示してルールが効いているか試してみましょう。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">AGENTS.md のルールに従って、タスク一覧の上に「タスクのキーワード検索バー」を追加してください。</div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step-section" id="step-6">
+        <h1>[発展] Google Cloud Run へのデプロイ準備（オプショナル）</h1>
+        <p>※ Google Cloud のデプロイ権限をお持ちの方や、時間に余裕がある方向けの追加コンテンツです。</p>
+
+        <h2>1. Dockerfile とデプロイ構成の作成</h2>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">この Next.js アプリを Google Cloud Run にデプロイするための Dockerfile と .dockerignore を作成し、gcloud コマンドでのビルド＆デプロイ手順を案内してください。</div>
+        </div>
+
+        <div class="alert alert-info">
+          お疲れ様でした！これで Antigravity ハンズオンは完了です。<br>
+          次のセッション（AI Coding 実践）では、チームで自由なアイディアを出して Antigravity で開発してみましょう！
+        </div>
+      </section>
+
+      <!-- Nav buttons -->
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" id="btn-prev" onclick="prevStep()">← 前へ</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextStep()">次へ →</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    let currentStep = 0;
+    const totalSteps = 7;
+
+    function updateView() {
+      // Update sections
+      document.querySelectorAll('.step-section').forEach((sec, idx) => {
+        sec.classList.toggle('active', idx === currentStep);
+      });
+      // Update TOC
+      document.querySelectorAll('.toc-item').forEach((item, idx) => {
+        item.classList.toggle('active', idx === currentStep);
+      });
+      // Update buttons
+      document.getElementById('btn-prev').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+      document.getElementById('btn-next').innerText = currentStep === totalSteps - 1 ? '完了 🎉' : '次へ →';
+      window.scrollTo(0, 0);
+    }
+
+    function goToStep(step) {
+      currentStep = step;
+      updateView();
+    }
+
+    function nextStep() {
+      if (currentStep < totalSteps - 1) {
+        currentStep++;
+        updateView();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        updateView();
+      }
+    }
+
+    function copyText(btn) {
+      const codeEl = btn.parentElement.nextElementSibling;
+      const text = codeEl.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    updateView();
+  </script>
+</body>
+</html>
