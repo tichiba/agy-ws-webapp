@@ -528,32 +528,39 @@ UXやデザイン、機能要件について考慮すべき点を私に質問し
         </div>
 
         <h2>2. 自己検証（Self-Verification）の効果を試す</h2>
-        <p><code>AGENTS.md</code> が作成されたら、簡単な追加機能を依頼してみましょう。</p>
+        <p><code>AGENTS.md</code> が作成されたら、普通の言葉で追加機能を依頼してみましょう。</p>
 
         <div class="prompt-box">
           <div class="prompt-header">
             <span>Antigravity Chat Prompt</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">AGENTS.md のルールに従って、タスク一覧の上に「タスクのキーワード検索バー」を追加してください。</div>
+          <div class="prompt-content">タスク一覧の上に「タスクのキーワード検索バー」を追加してください。</div>
         </div>
 
         <div class="alert alert-tip">
-          💡 <strong>ポイント（自己検証ループ）:</strong><br>
-          プロンプトで「ビルドを実行して」と指示していなくても、エージェントは <code>AGENTS.md</code> のルールを読み込み、コード編集後に自動的に <code>npm run build</code> や <code>npm run lint</code> を実行してエラーがないか自己検証します。
+          💡 <strong>ポイント（自律的な自己検証）:</strong><br>
+          プロンプトに「AGENTS.md を読んで」や「ビルドを実行して」と一切指定していませんが、Antigravity は自動的に <code>AGENTS.md</code> を認識します。コード編集後、自律的に <code>npm run build</code> や <code>npm run lint</code> を実行し、エラーがないことを確認してから完了報告します。
         </div>
 
         <h2>3. ルールを「1 行追記して育てる」体験</h2>
-        <p>エージェントの出力がチーム規約と少しズレていた場合は、プロンプトで毎回注意するのではなく、<code>AGENTS.md</code> に 1 行ルールを追記して育てていきます。</p>
+        <p>開発を進める中で、「コンポーネントを 1 ファイルにベタ書きせず分割してほしい」「アイコンは勝手に追加せず既存ライブラリを使ってほしい」といったチーム方針が出てきた場合、プロンプトで毎回指示するのではなく、<code>AGENTS.md</code> の <strong>「4. チーム固有の追加ルール」</strong> に 1 行追記してエージェントを育てていきます。</p>
 
         <div class="prompt-box">
           <div class="prompt-header">
             <span>Antigravity Chat Prompt</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">AGENTS.md の「4. チーム固有の追加ルール」に以下のルールを 1 行追記してください：
-* 検索バーのプレースホルダーは「タスクをキーワードで検索...」と日本語で記述し、右端にクリア（✕）ボタンを設けること
-追記したルールに従って検索バーを更新してください。</div>
+          <div class="prompt-content">AGENTS.md の「4. チーム固有の追加ルール」に以下のルールを追記してください：
+* 新しいUI部品を作成する際は page.tsx に直書きせず、src/components/ 配下にコンポーネントファイルとして分割すること（理由: 可読性と再利用性を保つため）。
+* アイコンを使用する際は、外部パッケージを新規インストールせず必ず既存の lucide-react を使用すること。
+
+追記後、各タスクに「優先度（高・中・低）」を設定・表示するバッジ機能を追加してください。</div>
+        </div>
+
+        <div class="alert alert-tip">
+          💡 <strong>ポイント:</strong><br>
+          エージェントが <code>AGENTS.md</code> の追記ルールに従い、自動的に <code>src/components/</code> 配下に独立したコンポーネントファイルを作成し、<code>lucide-react</code> のアイコンを使って実装することを確認します。
         </div>
       </section>
 
