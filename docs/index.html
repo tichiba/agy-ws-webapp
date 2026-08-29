@@ -490,26 +490,45 @@ UXやデザイン、機能要件について考慮すべき点を私に質問し
 
       <!-- STEP 5 -->
       <section class="step-section" id="step-5">
-        <h1>Step 5: AGENTS.md による開発ルールの定義（所要時間: 5分）</h1>
-        <p>チーム開発や継続的な開発において、エージェントにプロジェクト固有の規約を教え込む <code>AGENTS.md</code> を作成します。</p>
+        <h1>Step 5: AGENTS.md による開発ルールと自己検証（所要時間: 5分）</h1>
+        <p>AI エージェントは優秀ですが、プロジェクト固有の「テスト/ビルドコマンド」や「絶対にやってはいけないこと」を事前には知りません。<br>
+        最初から膨大なルールを書くのではなく、<strong>「プロジェクト概要」「必須の検証コマンド」「禁止事項3つ」</strong>の最小構成（約30行）で小さく始めるのがベストプラクティスです。</p>
 
-        <h2>1. 開発ルールの作成指示</h2>
-        <p>チャットパネルに以下を入力します。</p>
+        <h2>1. 最小構成の AGENTS.md の作成指示</h2>
+        <p>チャットパネルに以下を入力し、プロジェクトルートにスターター設定の <code>AGENTS.md</code> を作成させます。</p>
 
         <div class="prompt-box">
           <div class="prompt-header">
             <span>Antigravity Chat Prompt</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">このプロジェクトの開発規約として、ルートに AGENTS.md を作成してください。
-- コンポーネントは TypeScript で型安全に記述すること
-- コメントやドキュメントは日本語で記述すること
-- アクセシビリティ（ARIA属性やキーボード操作）を考慮すること
-- UIコンポーネントは Tailwind CSS を使用し一貫したカラーパレットを保つこと</div>
+          <div class="prompt-content">プロジェクトのルートに、以下の内容で AGENTS.md を作成してください。
+
+# AI エージェント作業ガイドライン
+
+本プロジェクトで作業する AI エージェントは、以下のルールに従ってください。
+
+## 1. プロジェクト概要
+* **概要:** Antigravity ワークショップ用 Next.js + Tailwind CSS タスク管理アプリ
+* **主要ディレクトリ:** `src/app/` (UI・画面実装)
+
+## 2. 必須の検証コマンド（完了前に必ず自己実行すること）
+コードを変更・追加した後は、完了報告の前に必ず以下のコマンドを実行してエラーがないことを確認してください。
+* **ビルド / 型チェック:** `npm run build`
+* **リント:** `npm run lint`
+
+## 3. 絶対にしてほしくないこと 3 つ（禁止事項）
+1. **シークレットの直接記述禁止:** API キーやパスワード、トークンをコード内にハードコードしないこと。
+2. **破壊的コマンドの禁止:** `git reset --hard` や `git push --force` などの破壊的 Git 操作は絶対に実行しないこと。
+3. **未検証での完了報告禁止:** ビルドや型チェックがエラーのまま完了と報告せず、自律的に修復してから完了とすること。
+
+---
+## 4. チーム固有の追加ルール
+<!-- 今後エージェントがミスをした際、ここに 1 行ずつ追記して育てます --></div>
         </div>
 
-        <h2>2. ルールの効果を確認する</h2>
-        <p>作成された <code>AGENTS.md</code> を確認した上で、簡単な追加機能を指示してルールが効いているか試してみましょう。</p>
+        <h2>2. 自己検証（Self-Verification）の効果を試す</h2>
+        <p><code>AGENTS.md</code> が作成されたら、簡単な追加機能を依頼してみましょう。</p>
 
         <div class="prompt-box">
           <div class="prompt-header">
@@ -517,6 +536,24 @@ UXやデザイン、機能要件について考慮すべき点を私に質問し
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
           <div class="prompt-content">AGENTS.md のルールに従って、タスク一覧の上に「タスクのキーワード検索バー」を追加してください。</div>
+        </div>
+
+        <div class="alert alert-tip">
+          💡 <strong>ポイント（自己検証ループ）:</strong><br>
+          プロンプトで「ビルドを実行して」と指示していなくても、エージェントは <code>AGENTS.md</code> のルールを読み込み、コード編集後に自動的に <code>npm run build</code> や <code>npm run lint</code> を実行してエラーがないか自己検証します。
+        </div>
+
+        <h2>3. ルールを「1 行追記して育てる」体験</h2>
+        <p>エージェントの出力がチーム規約と少しズレていた場合は、プロンプトで毎回注意するのではなく、<code>AGENTS.md</code> に 1 行ルールを追記して育てていきます。</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Antigravity Chat Prompt</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">AGENTS.md の「4. チーム固有の追加ルール」に以下のルールを 1 行追記してください：
+* 検索バーのプレースホルダーは「タスクをキーワードで検索...」と日本語で記述し、右端にクリア（✕）ボタンを設けること
+追記したルールに従って検索バーを更新してください。</div>
         </div>
       </section>
 
