@@ -311,18 +311,52 @@
         <h2>事前準備</h2>
         <ol>
           <li>Antigravity を起動し、Google Cloud Project に接続されていることを確認します。</li>
-          <li>ターミナルで本ハンズオン用のベースリポジトリを clone またはダウンロードします：
-            <div class="prompt-box">
-              <div class="prompt-header">
-                <span>Terminal</span>
-                <button class="btn-copy" onclick="copyText(this)">Copy</button>
-              </div>
-              <div class="prompt-content">git clone https://github.com/tichiba/agy-ws-webapp.git
+          <li>ハンズオン用のベースリポジトリを取得し、依存関係をインストールします。<br>
+            お使いの環境に合わせて、<strong>【方法A: Git を利用】</strong> または <strong>【方法B: ZIP をダウンロード（Git 不要）】</strong> のいずれかの手順を実施してください。
+            
+            <div style="margin-top: 1rem; margin-bottom: 1.5rem; padding: 1rem; background-color: #f1f3f4; border-radius: var(--radius);">
+              <h3 style="font-size: 1.05rem; margin-top: 0; margin-bottom: 0.5rem; color: var(--primary);">▼ 方法A: Git を利用する場合</h3>
+              <p style="margin-bottom: 0.5rem;">ターミナルで以下のコマンドを実行します：</p>
+              <div class="prompt-box" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="prompt-header">
+                  <span>Terminal</span>
+                  <button class="btn-copy" onclick="copyText(this)">Copy</button>
+                </div>
+                <div class="prompt-content">git clone https://github.com/tichiba/agy-ws-webapp.git
 cd agy-ws-webapp
 npm install</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem; margin-bottom: 1.5rem; padding: 1rem; background-color: #f1f3f4; border-radius: var(--radius);">
+              <h3 style="font-size: 1.05rem; margin-top: 0; margin-bottom: 0.5rem; color: var(--primary);">▼ 方法B: ZIP をダウンロードする場合（Git 未インストールの方）</h3>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>1. ZIP のダウンロード:</strong><br>
+                以下のリンクをクリックして ZIP ファイルをダウンロードします：<br>
+                👉 <a href="https://github.com/tichiba/agy-ws-webapp/archive/refs/heads/main.zip" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-weight: 700; word-break: break-all;">https://github.com/tichiba/agy-ws-webapp/archive/refs/heads/main.zip</a>
+              </p>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>2. ZIP の解凍:</strong><br>
+                ダウンロードした <code>agy-ws-webapp-main.zip</code> を任意のフォルダ（デスクトップなど）に解凍（展開）します。
+              </p>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>3. Antigravity でフォルダを開く:</strong><br>
+                Antigravity のメニュー <code>File -&gt; Open Folder</code> から、解凍した <code>agy-ws-webapp-main</code> フォルダを開きます。
+              </p>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>4. 依存パッケージのインストール:</strong><br>
+                Antigravity のメニュー <code>Terminal -&gt; New Terminal</code> からターミナルを開き、以下のコマンドを実行します：
+              </p>
+              <div class="prompt-box" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="prompt-header">
+                  <span>Terminal</span>
+                  <button class="btn-copy" onclick="copyText(this)">Copy</button>
+                </div>
+                <div class="prompt-content">npm install</div>
+              </div>
             </div>
           </li>
-          <li>Antigravity の <code>File -> Open Folder</code> から <code>agy-ws-webapp</code> フォルダを開きます。</li>
+          <li>Antigravity 上でプロジェクトフォルダ（<code>agy-ws-webapp</code> または <code>agy-ws-webapp-main</code>）が開かれ、<code>npm install</code> が完了していることを確認します。</li>
         </ol>
       </section>
 

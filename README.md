@@ -11,12 +11,21 @@ Google Antigravity ハンズオン用の Next.js + Tailwind CSS ベースアプ�
 
 ## 🚀 クイックスタート
 
-### 1. 依存関係のインストール
+### 1. リポジトリの取得
+- **Git をお使いの方:**
+  ```bash
+  git clone https://github.com/tichiba/agy-ws-webapp.git
+  cd agy-ws-webapp
+  ```
+- **Git が未インストールの方:**
+  [ZIP ファイル（main.zip）をダウンロード](https://github.com/tichiba/agy-ws-webapp/archive/refs/heads/main.zip) して解凍し、解凍したフォルダを開いてください。
+
+### 2. 依存関係のインストール
 ```bash
 npm install
 ```
 
-### 2. 開発サーバーの起動
+### 3. 開発サーバーの起動
 ```bash
 npm run dev
 ```
