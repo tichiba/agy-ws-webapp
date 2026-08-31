@@ -364,21 +364,9 @@ npm install</div>
       <!-- STEP 1 -->
       <section class="step-section" id="step-1">
         <h1>Step 1: プロジェクトの把握（所要時間: 5分）</h1>
-        <p>まずはベースアプリを起動し、Antigravity のエージェントにリポジトリ全体の構造を解説させましょう。</p>
+        <p>まずは Antigravity のエージェントにリポジトリ全体の構造を解説させ、その後にベースアプリを起動して画面を確認しましょう。</p>
 
-        <h2>1. 開発サーバーの起動</h2>
-        <p><code>Cmd + Shift + P</code>（Windows / Linux は <code>Ctrl + Shift + P</code>）を押してコマンドパレットを開き、<code>Terminal</code> と入力して候補からターミナルを開きます（ショートカット <code>Ctrl + `</code> でも開けます）。<br>
-        開いたターミナルで以下のコマンドを実行して開発サーバーを起動します。</p>
-        <div class="prompt-box">
-          <div class="prompt-header">
-            <span>Terminal</span>
-            <button class="btn-copy" onclick="copyText(this)">Copy</button>
-          </div>
-          <div class="prompt-content">npm run dev</div>
-        </div>
-        <p>ブラウザで <code>http://localhost:3000</code> を開き、初期画面が表示されることを確認します。</p>
-
-        <h2>2. エージェントにコード構成を解説させる</h2>
+        <h2>1. エージェントにコード構成を解説させる</h2>
         <p>右側の Antigravity チャットパネルに以下のプロンプトを入力して送信します。</p>
 
         <div class="prompt-box">
@@ -392,6 +380,18 @@ npm install</div>
         <div class="alert alert-tip">
           💡 <strong>ポイント:</strong> Antigravity は個別のファイルを指定しなくても、プロジェクト全体を自動インデックスして構造を正確に把握します。
         </div>
+
+        <h2>2. 開発サーバーの起動</h2>
+        <p><code>Cmd + Shift + P</code>（Windows / Linux は <code>Ctrl + Shift + P</code>）を押してコマンドパレットを開き、<code>Terminal</code> と入力して候補からターミナルを開きます（ショートカット <code>Ctrl + `</code> でも開けます）。<br>
+        開いたターミナルで以下のコマンドを実行して開発サーバーを起動します。</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Terminal</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">npm run dev</div>
+        </div>
+        <p>ブラウザで <code>http://localhost:3000</code> を開き、初期画面が表示されることを確認します。</p>
       </section>
 
       <!-- STEP 2 -->
