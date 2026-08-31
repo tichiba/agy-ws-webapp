@@ -46,7 +46,7 @@ export default function Home() {
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
                 3
               </span>
-              仕様を対話で詰めてモダンUIにする
+              <code>/grill-me</code> で仕様を詰めてモダンUIにする
             </li>
           </ul>
         </div>

@@ -284,7 +284,7 @@
         <li class="toc-item active" onclick="goToStep(0)"><span class="toc-num">0</span>概要と事前準備</li>
         <li class="toc-item" onclick="goToStep(1)"><span class="toc-num">1</span>Step 1: コード把握</li>
         <li class="toc-item" onclick="goToStep(2)"><span class="toc-num">2</span>Step 2: 計画と実装</li>
-        <li class="toc-item" onclick="goToStep(3)"><span class="toc-num">3</span>Step 3: 仕様対話とモダンUI化</li>
+        <li class="toc-item" onclick="goToStep(3)"><span class="toc-num">3</span>Step 3: 仕様対話 (/grill-me)</li>
         <li class="toc-item" onclick="goToStep(4)"><span class="toc-num">4</span>Step 4: 自律修復・検証</li>
         <li class="toc-item" onclick="goToStep(5)"><span class="toc-num">5</span>Step 5: 開発規約 (AGENTS.md)</li>
         <li class="toc-item" onclick="goToStep(6)"><span class="toc-num">6</span>[発展] Cloud Run デプロイ</li>
@@ -302,7 +302,7 @@
           <ul>
             <li><strong>コンテキスト理解</strong>: リポジトリ全体を読み解かせるチャット操作</li>
             <li><strong>計画的な実装</strong>: いきなりコードを書かせず「まず計画を立案・レビュー」させてから実装</li>
-            <li><strong>仕様対話</strong>: エージェントからの逆質問で要件やデザインを詰める対話体験</li>
+            <li><strong>/grill-me コマンド</strong>: エージェントからの逆質問で仕様を詰める対話体験</li>
             <li><strong>自律的な検証・修復</strong>: ターミナルコマンドを実行させエラーを自己修復させるフロー</li>
             <li><strong>AGENTS.md</strong>: プロジェクト固有のルールを定義してエージェントを制御</li>
           </ul>
@@ -435,19 +435,19 @@ npm install</div>
 
       <!-- STEP 3 -->
       <section class="step-section" id="step-3">
-        <h1>Step 3: 仕様対話とモダンUI化（所要時間: 8分）</h1>
-        <p>要件が曖昧なとき、エージェント側から質問を投げさせて仕様を具体化する対話フローを体験します。</p>
+        <h1>Step 3: /grill-me による仕様対話とモダンUI化（所要時間: 8分）</h1>
+        <p>要件が曖昧なとき、エージェント側から質問を投げさせて仕様を具体化する <code>/grill-me</code> コマンドを体験します。</p>
 
-        <h2>1. 仕様対話の開始</h2>
-        <p>チャットパネルに以下を入力し、エージェントに質問を求めます。</p>
+        <h2>1. 仕様対話の開始 (/grill-me)</h2>
+        <p>チャットパネルに以下を入力します。</p>
 
         <div class="prompt-box">
           <div class="prompt-header">
             <span>Antigravity Chat Prompt</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">タスク一覧画面に「ステータス別の絞り込みフィルター（タブ）」と「ワンクリックでステータスを変更できるボタン」を追加したいです。
-実装前に、UXやデザイン、機能要件について考慮すべき点があれば、私にいくつか質問して仕様を詰めてください。</div>
+          <div class="prompt-content">/grill-me タスク一覧画面に「ステータス別の絞り込みフィルター（タブ）」と「ワンクリックでステータスを変更できるボタン」を追加したいです。
+UXやデザイン、機能要件について考慮すべき点を私に質問して仕様を詰めてください。</div>
         </div>
 
         <h2>2. 質問への回答とデザインの指示</h2>
