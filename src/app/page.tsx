@@ -40,13 +40,13 @@ export default function Home() {
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
                 2
               </span>
-              <code>/plan</code> でタスク管理機能を追加する
+              計画を立ててタスク管理機能を追加する
             </li>
             <li className="flex items-center gap-2">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
                 3
               </span>
-              <code>/grill-me</code> で仕様を詰めてモダンUIにする
+              仕様を対話で詰めてモダンUIにする
             </li>
           </ul>
         </div>
