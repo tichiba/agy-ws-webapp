@@ -285,9 +285,8 @@
         <li class="toc-item" onclick="goToStep(1)"><span class="toc-num">1</span>Step 1: コード把握</li>
         <li class="toc-item" onclick="goToStep(2)"><span class="toc-num">2</span>Step 2: 計画と実装</li>
         <li class="toc-item" onclick="goToStep(3)"><span class="toc-num">3</span>Step 3: 仕様対話 (/grill-me)</li>
-        <li class="toc-item" onclick="goToStep(4)"><span class="toc-num">4</span>Step 4: 自律修復・検証</li>
-        <li class="toc-item" onclick="goToStep(5)"><span class="toc-num">5</span>Step 5: 開発規約 (AGENTS.md)</li>
-        <li class="toc-item" onclick="goToStep(6)"><span class="toc-num">6</span>[発展] Cloud Run デプロイ</li>
+        <li class="toc-item" onclick="goToStep(4)"><span class="toc-num">4</span>Step 4: 開発規約 (AGENTS.md)</li>
+        <li class="toc-item" onclick="goToStep(5)"><span class="toc-num">5</span>[発展] Cloud Run デプロイ</li>
       </ul>
     </aside>
 
@@ -303,28 +302,25 @@
             <li><strong>コンテキスト理解</strong>: リポジトリ全体を読み解かせるチャット操作</li>
             <li><strong>計画的な実装</strong>: いきなりコードを書かせず「まず計画を立案・レビュー」させてから実装</li>
             <li><strong>/grill-me コマンド</strong>: エージェントからの逆質問で仕様を詰める対話体験</li>
-            <li><strong>自律的な検証・修復</strong>: ターミナルコマンドを実行させエラーを自己修復させるフロー</li>
-            <li><strong>AGENTS.md</strong>: プロジェクト固有のルールを定義してエージェントを制御</li>
+            <li><strong>AGENTS.md</strong>: プロジェクト固有のルールを定義してエージェントを自律制御</li>
           </ul>
         </div>
 
         <h2>事前準備</h2>
         <ol>
           <li>Antigravity を起動し、Google Cloud Project に接続されていることを確認します。</li>
-          <li>ハンズオン用のベースリポジトリを取得し、依存関係をインストールします。<br>
-            お使いの環境に合わせて、<strong>【方法A: Git を利用】</strong> または <strong>【方法B: ZIP をダウンロード（Git 不要）】</strong> のいずれかの手順を実施してください。
+          <li>ハンズオン用のベースリポジトリを取得します。<br>
+            お使いの環境に合わせて、<strong>【方法A: Git を利用】</strong> または <strong>【方法B: ZIP をダウンロード（Git 不要）】</strong> のいずれかの手順でソースコードを取得してください。
             
             <div style="margin-top: 1rem; margin-bottom: 1.5rem; padding: 1rem; background-color: #f1f3f4; border-radius: var(--radius);">
               <h3 style="font-size: 1.05rem; margin-top: 0; margin-bottom: 0.5rem; color: var(--primary);">▼ 方法A: Git を利用する場合</h3>
-              <p style="margin-bottom: 0.5rem;">ターミナルで以下のコマンドを実行します：</p>
+              <p style="margin-bottom: 0.5rem;">ターミナルで以下のコマンドを実行し、リポジトリをクローンします：</p>
               <div class="prompt-box" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
                 <div class="prompt-header">
                   <span>Terminal</span>
                   <button class="btn-copy" onclick="copyText(this)">Copy</button>
                 </div>
-                <div class="prompt-content">git clone https://github.com/tichiba/agy-ws-webapp.git
-cd agy-ws-webapp
-npm install</div>
+                <div class="prompt-content">git clone https://github.com/tichiba/agy-ws-webapp.git</div>
               </div>
             </div>
 
@@ -339,32 +335,24 @@ npm install</div>
                 <strong>2. ZIP の解凍:</strong><br>
                 ダウンロードした <code>agy-ws-webapp-main.zip</code> を任意のフォルダ（デスクトップなど）に解凍（展開）します。
               </p>
-              <p style="margin-bottom: 0.5rem;">
-                <strong>3. Antigravity でフォルダを開く:</strong><br>
-                Antigravity のメニュー <code>File -&gt; Open Folder</code> から、解凍した <code>agy-ws-webapp-main</code> フォルダを開きます。
-              </p>
-              <p style="margin-bottom: 0.5rem;">
-                <strong>4. 依存パッケージのインストール:</strong><br>
-                <code>Cmd + Shift + P</code>（Windows / Linux は <code>Ctrl + Shift + P</code>）を押してコマンドパレットを開き、<code>Terminal</code> と入力して候補に出てくる <strong>View: Toggle Terminal</strong>（または <strong>Terminal</strong>）を選んでターミナルを開きます（ショートカット <code>Ctrl + `</code> でも開閉できます）。<br>
-                ターミナルで以下のコマンドを実行します：
-              </p>
-              <div class="prompt-box" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
-                <div class="prompt-header">
-                  <span>Terminal</span>
-                  <button class="btn-copy" onclick="copyText(this)">Copy</button>
-                </div>
-                <div class="prompt-content">npm install</div>
-              </div>
             </div>
           </li>
-          <li>Antigravity 上でプロジェクトフォルダ（<code>agy-ws-webapp</code> または <code>agy-ws-webapp-main</code>）が開かれ、<code>npm install</code> が完了していることを確認します。</li>
+          <li>
+            <strong>Antigravity でプロジェクトフォルダを開く（方法A・B共通）:</strong><br>
+            Antigravity のメニュー <code>File -&gt; Open Folder</code> から、取得したプロジェクトフォルダを開きます：
+            <ul style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+              <li><strong>方法Aの場合:</strong> クローンした <code>agy-ws-webapp</code> フォルダ</li>
+              <li><strong>方法Bの場合:</strong> 解凍した <code>agy-ws-webapp-main</code> フォルダ</li>
+            </ul>
+            画面左側のエクスプローラーにプロジェクトのファイル群（<code>src/</code> や <code>package.json</code> など）が表示されていることを確認します。
+          </li>
         </ol>
       </section>
 
       <!-- STEP 1 -->
       <section class="step-section" id="step-1">
         <h1>Step 1: プロジェクトの把握（所要時間: 5分）</h1>
-        <p>まずは Antigravity のエージェントにリポジトリ全体の構造を解説させ、その後にベースアプリを起動して画面を確認しましょう。</p>
+        <p>まずは Antigravity のエージェントにリポジトリ全体の構造を解説させ、その後に依存パッケージをインストールしてベースアプリを起動し、画面を確認しましょう。</p>
 
         <h2>1. エージェントにコード構成を解説させる</h2>
         <p>右側の Antigravity チャットパネルに以下のプロンプトを入力して送信します。</p>
@@ -381,9 +369,21 @@ npm install</div>
           💡 <strong>ポイント:</strong> Antigravity は個別のファイルを指定しなくても、プロジェクト全体を自動インデックスして構造を正確に把握します。
         </div>
 
-        <h2>2. 開発サーバーの起動</h2>
-        <p><code>Cmd + Shift + P</code>（Windows / Linux は <code>Ctrl + Shift + P</code>）を押してコマンドパレットを開き、<code>Terminal</code> と入力して候補からターミナルを開きます（ショートカット <code>Ctrl + `</code> でも開けます）。<br>
-        開いたターミナルで以下のコマンドを実行して開発サーバーを起動します。</p>
+        <h2>2. 依存パッケージのインストール</h2>
+        <p>コードの全体像を把握できたら、アプリを動かすための依存パッケージをインストールします。<br>
+        <code>Cmd + Shift + P</code>（Windows / Linux は <code>Ctrl + Shift + P</code>）を押してコマンドパレットを開き、<code>Terminal</code> と入力して候補に出てくる <strong>View: Toggle Terminal</strong>（または <strong>Terminal</strong>）を選んでターミナルを開きます（ショートカット <code>Ctrl + `</code> でも開閉できます）。<br>
+        開いたターミナルで以下のコマンドを実行します：</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Terminal</span>
+            <button class="btn-copy" onclick="copyText(this)">Copy</button>
+          </div>
+          <div class="prompt-content">npm install</div>
+        </div>
+        <p>もしくは、エージェントに「<code>npm install</code> を実行して」とチャットで指示してターミナルコマンドを実行させることも可能です。</p>
+
+        <h2>3. 開発サーバーの起動</h2>
+        <p>ターミナルで以下のコマンドを実行して開発サーバーを起動します。</p>
         <div class="prompt-box">
           <div class="prompt-header">
             <span>Terminal</span>
@@ -418,18 +418,18 @@ npm install</div>
         </div>
 
         <h2>2. 計画の承認と実装指示</h2>
-        <p>エージェントが提示した計画を確認し、問題なければ実装指示を出します。</p>
+        <p>エージェントが提示した計画を確認し、問題なければ計画画面に表示される <strong>「Proceed」</strong> ボタンをクリックするか、チャットで一言送信するだけで実装が始まります（どのファイルを作成・更新するかを人間が指定する必要はありません）。</p>
 
         <div class="prompt-box">
           <div class="prompt-header">
-            <span>Antigravity Chat Prompt</span>
+            <span>Antigravity Chat Prompt（または「Proceed」ボタンを押す）</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">この計画で実装を進めてください。必要なファイルの作成と page.tsx の更新をお願いします。</div>
+          <div class="prompt-content">この計画で実装を進めてください。</div>
         </div>
 
         <div class="alert alert-tip">
-          💡 <strong>ポイント:</strong> エージェントが生成した複数ファイルの変更差分（Diff）をエディタ上で確認し、<code>Accept</code> を押して適用しましょう。
+          💡 <strong>ポイント:</strong> エージェントが承認された計画に沿って自律的に必要なファイルの作成やコードの更新を行います。生成された差分（Diff）を確認し、<code>Accept</code> を押して適用しましょう。
         </div>
       </section>
 
@@ -446,8 +446,7 @@ npm install</div>
             <span>Antigravity Chat Prompt</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">/grill-me タスク一覧画面に「ステータス別の絞り込みフィルター（タブ）」と「ワンクリックでステータスを変更できるボタン」を追加したいです。
-UXやデザイン、機能要件について考慮すべき点を私に質問して仕様を詰めてください。</div>
+          <div class="prompt-content">/grill-me タスク一覧画面に「ステータス別の絞り込みフィルター（タブ）」と「ワンクリックでステータスを変更できるボタン」を追加したいです。</div>
         </div>
 
         <h2>2. 質問への回答とデザインの指示</h2>
@@ -458,43 +457,26 @@ UXやデザイン、機能要件について考慮すべき点を私に質問し
             <span>Antigravity Chat Prompt</span>
             <button class="btn-copy" onclick="copyText(this)">Copy</button>
           </div>
-          <div class="prompt-content">上記の回答内容で実装してください。あわせて、Tailwind CSS を活用してモダンなカードスタイル（洗練されたシャドウ、ダークモード調の配色、ステータス別カラーバッジ、レスポンシブ対応）に整えてください。</div>
-        </div>
-      </section>
-
-      <!-- STEP 4 -->
-      <section class="step-section" id="step-4">
-        <h1>Step 4: 自律的な検証とエラー修復（所要時間: 5分）</h1>
-        <p>エージェント自身に型チェックやビルドコマンドを実行させ、エラーがあれば自動で自己修復させる自律性を体験します。</p>
-
-        <h2>1. 自動ビルドチェックと修復指示</h2>
-        <p>チャットパネルに以下を入力します。</p>
-
-        <div class="prompt-box">
-          <div class="prompt-header">
-            <span>Antigravity Chat Prompt</span>
-            <button class="btn-copy" onclick="copyText(this)">Copy</button>
-          </div>
-          <div class="prompt-content">TypeScript の型エラー、未定義プロパティ、Lint エラーがないかチェックして、問題があれば自動で修正してください。
-また、ターミナルで `npm run build` を実行してビルドが正常に通ることを確認してください。</div>
+          <div class="prompt-content">上記の回答内容で実装してください。あわせて、背景に柔らかなグラデーション（indigo〜sky）、半透明のすりガラスカード（backdrop-blur bg-white/80）、ホバー時の浮き上がりアニメーションを取り入れた華やかなモダンUIに整えてください。</div>
         </div>
 
-        <h2>2. ブラウザで動作確認</h2>
+        <h2>3. ブラウザで動作確認</h2>
         <p><code>http://localhost:3000</code> を開き、以下を確認します：</p>
         <ul>
           <li>新規タスクを追加できるか</li>
           <li>ステータス（未着手・進行中・完了）を変更できるか</li>
           <li>フィルタータブで正しく絞り込みができるか</li>
+          <li>グラデーションやすりガラス効果が適用されているか</li>
         </ul>
 
         <div class="alert alert-tip">
-          💡 <strong>ポイント:</strong> もし画面で動かない部分やエラーがあれば、「〇〇が動かないので直して」とチャットにそのまま投げてみましょう！
+          💡 <strong>ポイント:</strong> もし画面で動かない部分やレイアウト崩れがあれば、「〇〇が動かないので直して」とチャットにそのまま投げてみましょう！
         </div>
       </section>
 
-      <!-- STEP 5 -->
-      <section class="step-section" id="step-5">
-        <h1>Step 5: AGENTS.md による開発ルールと自己検証（所要時間: 5分）</h1>
+      <!-- STEP 4 -->
+      <section class="step-section" id="step-4">
+        <h1>Step 4: AGENTS.md による開発ルールと自己検証（所要時間: 5分）</h1>
         <p>AI エージェントは優秀ですが、プロジェクト固有の「テスト/ビルドコマンド」や「絶対にやってはいけないこと」を事前には知りません。<br>
         最初から膨大なルールを書くのではなく、<strong>「プロジェクト概要」「必須の検証コマンド」「禁止事項3つ」</strong>の最小構成（約30行）で小さく始めるのがベストプラクティスです。</p>
 
@@ -568,8 +550,8 @@ UXやデザイン、機能要件について考慮すべき点を私に質問し
         </div>
       </section>
 
-      <!-- STEP 6 -->
-      <section class="step-section" id="step-6">
+      <!-- STEP 5 -->
+      <section class="step-section" id="step-5">
         <h1>[発展] Google Cloud Run へのデプロイ準備（オプショナル）</h1>
         <p>※ Google Cloud のデプロイ権限をお持ちの方や、時間に余裕がある方向けの追加コンテンツです。</p>
 
@@ -598,7 +580,7 @@ UXやデザイン、機能要件について考慮すべき点を私に質問し
 
   <script>
     let currentStep = 0;
-    const totalSteps = 7;
+    const totalSteps = 6;
 
     function updateView() {
       // Update sections
